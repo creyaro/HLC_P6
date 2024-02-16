@@ -1,0 +1,35 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ "main" ] # indicamos que se lanzará el pipeline cuando se haga push en la rama main
+  pull_request:
+    branches: [ "main" ] # indicamos que se lanzará el pipeline cuando se haga una PR en la rama main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # indicamos que la ejecución se realizará en la última versión disponible del SO ubuntu
+    steps: # secuencia de pasos a seguir
+    - uses: actions/checkout@v3 # clona el repositorio
+    - name: Set up JDK 21 # nombre del paso (opcional)
+      uses: actions/setup-java@v3 # configura el entorno con Java 21
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build discovery-service
+      run: mvn -B package --file discovery-service/pom.xml # lanzamos el comando especificado
+
+    - name: Build students-service
+      run: mvn -B package --file students-service/pom.xml
+
+    - name: Build subjects-service
+      run: mvn -B package --file subjects-service/pom.xml
