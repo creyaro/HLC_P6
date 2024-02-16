@@ -2,36 +2,30 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main" ] # indicamos que se lanzará el pipeline cuando se haga push en la rama main
+    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ] # indicamos que se lanzará el pipeline cuando se haga una PR en la rama main
+    branches: [ "main" ]
 
 jobs:
   build:
-    runs-on: ubuntu-latest # indicamos que la ejecución se realizará en la última versión disponible del SO ubuntu
-    steps: # secuencia de pasos a seguir
-    - uses: actions/checkout@v3 # clona el repositorio
-    - name: Set up JDK 21 # nombre del paso (opcional)
-      uses: actions/setup-java@v3 # configura el entorno con Java 21
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 21
+      uses: actions/setup-java@v3
       with:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
     - name: Build discovery-service
-      run: mvn -B package --file discovery-service/pom.xml # lanzamos el comando especificado
-
+      run: mvn -B package --file discovery-service/pom.xml
     - name: Build students-service
       run: mvn -B package --file students-service/pom.xml
-
     - name: Build subjects-service
       run: mvn -B package --file subjects-service/pom.xml
 
   analyze:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        language: [ 'java' ]
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -45,4 +39,4 @@ jobs:
       - name: Analyze with CodeQL
         uses: github/codeql-action/analyze@v2
         with:
-          directory: students-service
+          directory: .
