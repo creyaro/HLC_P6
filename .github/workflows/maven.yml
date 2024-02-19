@@ -35,19 +35,19 @@ jobs:
       run: mvn -B package --file subjects-service/pom.xml
 
     - name: JaCoCo code coverage report for students-service
-    id: jacoco_reporter
-    uses: PavanMudigonda/jacoco-reporter@v4.9 # añadimos el visualizador de los resultados
-    with:
-    coverage_results_path: students-service/target/site/jacoco/jacoco.xml
-    coverage_report_name: Coverage for students-service
-    coverage_report_title: Coverage for students-service
-    skip_check_run: false
-    minimum_coverage: 80
-    fail_below_threshold: false
-    publish_only_summary: false
+      id: jacoco_reporter
+      uses: PavanMudigonda/jacoco-reporter@v4.9
+      with:
+        coverage_results_path: students-service/target/site/jacoco/jacoco.xml
+        coverage_report_name: Coverage for students-service
+        coverage_report_title: Coverage for students-service
+        skip_check_run: false
+        minimum_coverage: 80
+        fail_below_threshold: false
+        publish_only_summary: false
 
     - name: Upload JaCoCo coverage report 
-    uses: actions/upload-artifact@v2 # subimos el report resultante a GitHub
-    with:
-    name: jacoco-report
-    path: students-service/target/site/jacoco/
+      uses: actions/upload-artifact@v2 # subimos el report resultante a GitHub
+      with:
+        name: jacoco-report
+        path: students-service/target/site/jacoco/
