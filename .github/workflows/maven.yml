@@ -34,23 +34,16 @@ jobs:
     - name: Build subjects-service
       run: mvn -B package --file subjects-service/pom.xml
 
-  analyze:
-    runs-on: ubuntu-22.04
-    strategy:
-      matrix:
-        language: [ 'java' ]
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-        with:
-          languages: ${{ matrix.language }}
-          no-autobuild: false
-
-      - name: Analyze with CodeQL
-        uses: github/codeql-action/analyze@v2
-        with:
-          directory: students-service
+    - name: Update dependency graph for discovery-service
+      uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+      with:
+        directory: discovery-service
+    - name: Update dependency graph for students-service
+      uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+      with:
+        directory: students-service
+    - name: Update dependency graph for subjects-service
+      uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+      with:
+        directory: subjects-service
