@@ -16,7 +16,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest # indicamos que la ejecución se realizará en la última versión disponible del SO ubuntu
+    runs-on: ubuntu-22.04 # indicamos que la ejecución se realizará en la última versión disponible del SO ubuntu
     steps: # secuencia de pasos a seguir
     - uses: actions/checkout@v3 # clona el repositorio
     - name: Set up JDK 21 # nombre del paso (opcional)
