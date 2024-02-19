@@ -2,26 +2,42 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "sergiojr01-patch-1" ] # indicamos que se lanzará el pipeline cuando se haga push en la rama main
+    branches: 
+      - "sergiojr01-patch-1" # indicamos que se lanzará el pipeline cuando se haga push en la rama main
   pull_request:
-    branches: [ "sergiojr01-patch-1" ] # indicamos que se lanzará el pipeline cuando se haga una PR en la rama main
+    branches: 
+      - "sergiojr01-patch-1" # indicamos que se lanzará el pipeline cuando se haga una PR en la rama main
 
 jobs:
   build:
     runs-on: ubuntu-latest # indicamos que la ejecución se realizará en la última versión disponible del SO ubuntu
     steps: # secuencia de pasos a seguir
-    - uses: actions/checkout@v3 # clona el repositorio
-    - name: Set up JDK 21 # nombre del paso (opcional)
-      uses: actions/setup-java@v3 # configura el entorno con Java 21
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-        cache: maven
-    - name: Build discovery-service
-      run: mvn -B package --file discovery-service/pom.xml # lanzamos el comando especificado
-
-    - name: Build students-service
-      run: mvn -B package --file students-service/pom.xml
-
-    - name: Build subjects-service
-      run: mvn -B package --file subject-service/pom.xml
+      - uses: actions/checkout@v3 # clona el repositorio
+      - name: Set up JDK 21 # nombre del paso (opcional)
+        uses: actions/setup-java@v3 # configura el entorno con Java 21
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build discovery-service
+        run: mvn -B package --file discovery-service/pom.xml # lanzamos el comando especificado
+      - name: Build students-service
+        run: mvn -B package --file students-service/pom.xml
+      - name: Build subjects-service
+        run: mvn -B package --file subject-service/pom.xml
+      - name: JaCoCo code coverage report for students-service
+        id: jacoco_reporter
+        uses: PavanMudigonda/jacoco-reporter@v4.9 # añadimos el visualizador de los resultados
+        with:
+          coverage_results_path: students-service/target/site/jacoco/jacoco.xml
+          coverage_report_name: Coverage for students-service
+          coverage_report_title: Coverage for students-service
+          skip_check_run: false
+          minimum_coverage: 80
+          fail_below_threshold: false
+          publish_only_summary: false
+      - name: Upload JaCoCo coverage report 
+        uses: actions/upload-artifact@v2 # subimos el report resultante a GitHub
+        with:
+          name: jacoco-report
+          path: students-service/target/site/jacoco/
