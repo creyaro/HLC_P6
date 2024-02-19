@@ -28,11 +28,11 @@ jobs:
     - name: Build discovery-service
       run: mvn -B package --file discovery-service/pom.xml # lanzamos el comando especificado
 
-    - name: Build students-service
-      run: mvn -B package --file students-service/pom.xml
-
     - name: Build subjects-service
       run: mvn -B package --file subjects-service/pom.xml
+      
+    - name: Build students-service
+      run: mvn -B package --file students-service/pom.xml
 
     - name: JaCoCo code coverage report for students-service
       id: jacoco_reporter
