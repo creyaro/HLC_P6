@@ -10,9 +10,9 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main" ] # indicamos que se lanzará el pipeline cuando se haga push en la rama main
+    branches: [ "Sergio03P-patch-1" ] # indicamos que se lanzará el pipeline cuando se haga push en la rama main
   pull_request:
-    branches: [ "main" ] # indicamos que se lanzará el pipeline cuando se haga una PR en la rama main
+    branches: [ "Sergio03P-patch-1" ] # indicamos que se lanzará el pipeline cuando se haga una PR en la rama main
 
 jobs:
   build:
