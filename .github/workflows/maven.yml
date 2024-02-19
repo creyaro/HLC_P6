@@ -21,7 +21,7 @@ jobs:
       run: mvn -B package --file discovery-service/pom.xml # lanzamos el comando especificado
 
     - name: Build students-service
-      run: mvn -B package --file student-service/pom.xml
+      run: mvn -B package --file students-service/pom.xml
 
     - name: Build subjects-service
       run: mvn -B package --file subject-service/pom.xml
