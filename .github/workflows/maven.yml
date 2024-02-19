@@ -40,4 +40,4 @@ jobs:
         uses: actions/upload-artifact@v2 # subimos el report resultante a GitHub
         with:
           name: jacoco-report
-          path: students-service/target/site/jacoco/
+          path: student-service/target/site/jacoco/
