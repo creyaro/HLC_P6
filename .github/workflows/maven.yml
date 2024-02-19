@@ -22,14 +22,14 @@ jobs:
       - name: Build discovery-service
         run: mvn -B package --file discovery-service/pom.xml # lanzamos el comando especificado
       - name: Build students-service
-        run: mvn -B package --file students-service/pom.xml
+        run: mvn -B package --file student-service/pom.xml
       - name: Build subjects-service
         run: mvn -B package --file subject-service/pom.xml
       - name: JaCoCo code coverage report for students-service
         id: jacoco_reporter
         uses: PavanMudigonda/jacoco-reporter@v4.9 # añadimos el visualizador de los resultados
         with:
-          coverage_results_path: students-service/target/site/jacoco/jacoco.xml
+          coverage_results_path: student-service/target/site/jacoco/jacoco.xml
           coverage_report_name: Coverage for students-service
           coverage_report_title: Coverage for students-service
           skip_check_run: false
