@@ -2,13 +2,13 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main" ] # indicamos que se lanzará el pipeline cuando se haga push en la rama main
+    branches: [ "FranSantana_v1" ] # indicamos que se lanzará el pipeline cuando se haga push en la rama main
   pull_request:
     branches: [ "main" ] # indicamos que se lanzará el pipeline cuando se haga una PR en la rama main
 
 jobs:
   build:
-    runs-on: ubuntu-latest # indicamos que la ejecución se realizará en la última versión disponible del SO ubuntu
+    runs-on: ubuntu-20.04 # indicamos que la ejecución se realizará en la última versión disponible del SO ubuntu
     steps: # secuencia de pasos a seguir
     - uses: actions/checkout@v3 # clona el repositorio
     - name: Set up JDK 21 # nombre del paso (opcional)
