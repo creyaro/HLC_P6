@@ -49,5 +49,5 @@ jobs:
         directory: subjects-service
 
     - name: jacoco-reporter
-      uses: PavanMudigonda/jacoco-reporter@v4.9
+      uses: students-service/jacoco-reporter@v4.9
 
