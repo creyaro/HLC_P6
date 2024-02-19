@@ -2,26 +2,45 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "RuizRamirez_Manuel" ] # indicamos que se lanzará el pipeline cuando se haga push en la rama main
+    branches: 
+      - RuizRamirez_Manuel
   pull_request:
-    branches: [ "main" ] # indicamos que se lanzará el pipeline cuando se haga una PR en la rama main
+    branches: 
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest # indicamos que la ejecución se realizará en la última versión disponible del SO ubuntu
-    steps: # secuencia de pasos a seguir
-    - uses: actions/checkout@v3 # clona el repositorio
-    - name: Set up JDK 21 # nombre del paso (opcional)
-      uses: actions/setup-java@v3 # configura el entorno con Java 21
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-        cache: maven
-    - name: Build discovery-service
-      run: mvn -B package --file discovery-service/pom.xml # lanzamos el comando especificado
-
-    - name: Build students-service
-      run: mvn -B package --file students-service/pom.xml
-
-    - name: Build subjects-service
-      run: mvn -B package --file subjects-service/pom.xml
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+        
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          
+      - name: Build discovery-service
+        run: mvn -B package --file discovery-service/pom.xml
+        
+      - name: Build students-service
+        run: mvn -B package --file students-service/pom.xml
+        
+      - name: Build subjects-service
+        run: mvn -B package --file subjects-service/pom.xml
+        
+      - name: Update dependency graph for discovery-service
+        uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+        with:
+          directory: discovery-service
+      
+      - name: Update dependency graph for students-service
+        uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+        with:
+          directory: students-service
+      
+      - name: Update dependency graph for subjects-service
+        uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+        with:
+          directory: subjects-service
