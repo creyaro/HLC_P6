@@ -35,3 +35,24 @@ jobs:
 
     - name: Build subjects-service
       run: mvn -B package --file subjects-service/pom.xml
+
+  analyze:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        language: [ 'java' ]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ${{ matrix.language }}
+          no-autobuild: false
+
+      - name: Analyze with CodeQL
+        uses: github/codeql-action/analyze@v2
+        with:
+          directory: students-service
