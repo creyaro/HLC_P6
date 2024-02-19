@@ -82,29 +82,21 @@ GitHub Actions tiene una funcionalidad que permite mostrar todo el árbol de dep
 
 ![alt text](images/image-5.png)
 
-3. Añadimos a nuestro fichero `maven.yml` el siguiente job:
+3. Añadimos a nuestro fichero `maven.yml` los siguientes pasos:
 
 ```
-analyze:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        language: [ 'java' ]
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-        with:
-          languages: ${{ matrix.language }}
-          no-autobuild: false
-
-      - name: Analyze with CodeQL
-        uses: github/codeql-action/analyze@v2
-        with:
-          directory: students-service
+- name: Update dependency graph for discovery-service
+  uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+  with:
+    directory: discovery-service
+- name: Update dependency graph for students-service
+  uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+  with:
+    directory: students-service
+- name: Update dependency graph for subjects-service
+  uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+  with:
+    directory: subjects-service
 ```
 
 4. Tras subir los cambios, si vamos nuevamente a la parte de Actions veremos que se está ejecutando el pipeline:
