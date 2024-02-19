@@ -24,8 +24,7 @@ jobs:
       run: mvn -B package --file students-service/pom.xml
 
     - name: Build subjects-service
-      run: mvn -B package --file subjects-service/pom.xml
-      	
+      run: mvn -B package --file subjects-service/pom.xml 	
   analyze:
     runs-on: ubuntu-20.04
     strategy:
